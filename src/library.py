@@ -49,21 +49,45 @@ class Library:
 # method to issueing a book to a member, takes book_id and member_id as parameters, checks if both book_id and member_id exist in their respective dictionaries,
 #  if they do, checks if the book has available copies, if it does, decreases the number of copies by 1 and adds the book_id to the member's borrowed_books list
     def issue_book(self, book_id, member_id):
-        if book_id in self.books and member_id in self.members:
-            book = self.books[book_id]
-            member = self.members[member_id]
-            if book.copies > 0:
-                book.copies -= 1
-                member.borrow_book(book_id)
+        if book_id not in self.books:
+            print("Book not found in library.")
+            return
+        
+        if member_id not in self.members:
+            print ("Member not found in library.")
+            return
+
+        book = self.books[book_id]
+        member = self.members[member_id]
+
+        if book.copies <= 0:
+            print("No copies available for this book.")
+            return
+        
+        book.copies -= 1
+        member.borrow_book(book_id)
 
 # method for returning a book, takes book_id and member_id as parameters, checks if both book_id and member_id exist in their respective dictionaries,
 # if they do, increases the number of copies of the book by 1 and removes the book_id from the member's borrowed_books list
     def return_book(self, book_id, member_id):
-        if book_id in self.books and member_id in self.members:
-            book = self.books[book_id]
-            member = self.members[member_id]
-            book.copies += 1
-            member.return_book(book_id)
+        if book_id not in self.books:
+            print("Book not found in library.")
+            return
+        
+        if member_id not in self.members:
+            print ("Member not found in library.")
+            return
+        
+        book = self.books[book_id]
+        member = self.members[member_id]
+
+        if book_id not in member.borrowed_books:
+            print("This member did not borrow this book.")
+            return
+                
+        book.copies += 1
+        member.return_book(book_id)
+
 
 # method to display all books in the library, returns a list of book information by calling the display_info method of each book object in the books dictionary
     def display_books(self):
