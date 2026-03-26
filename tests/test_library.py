@@ -32,5 +32,17 @@ class TestLibrary(unittest.TestCase):
         self.library.issue_book("A00001", "X00001")
         self.assertEqual(self.book.copies, 0)
 
+    def test_book_not_found(self):
+        self.library.issue_book("Z9999", "X00001")
+        self.assertEqual(self.book.copies, 5)
+
+    def test_member_not_found(self):
+        self.library.issue_book("A00001", "Z9999")
+        self.assertEqual(self.book.copies, 5)
+
+    def test_return_not_borrowed(self):
+        self.library.return_book("A00001", "X00001")
+        self.assertEqual(self.book.copies, 5)
+
 if __name__ == '__main__':
     unittest.main()
