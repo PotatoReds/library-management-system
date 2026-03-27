@@ -5,6 +5,7 @@ class Member:
         self.name = name
         self.email = email
         self.borrowed_books = []
+        self.history = []
 
     # method to display member information in a structured return format
     def display_info(self):
@@ -13,8 +14,14 @@ class Member:
     # method for borrowing a book, adds the book_id to member borrowed_books list // append = add to the list
     def borrow_book(self, book_id):
         self.borrowed_books.append(book_id)
+        self.history.append(f"Borrowed: {book_id}")
 
     # method for returning a book, removes book_id from member borrowed_books list
     def return_book(self, book_id):
         if book_id in self.borrowed_books:
             self.borrowed_books.remove(book_id)
+            self.history.append(f"Returned: {book_id}")
+
+    # method to display the borrowing and returning history of the member
+    def display_history(self):
+        return self.history
