@@ -1,4 +1,5 @@
 # book class // Self = it self, a reference to the current instance of class, used to access attributes (variables) that belongs to the class
+# // Final Version
 class Book:
     def __init__(self, book_id, title, author, year, copies):
         self.book_id = book_id

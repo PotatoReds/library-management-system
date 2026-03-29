@@ -1,5 +1,6 @@
+# This module defines the Library class, which manages books and members.
+# // Final Version
 import json
-
 from src.book import Book
 from src.member import Member
 
@@ -142,20 +143,6 @@ class Library:
             json.dump({member_id: member.__dict__ for member_id, member in self.members.items()}, f)
 
 # method to load members from a json file, reads the "members.json" file and creates member objects from the data, adding them to the members dictionary
-    def load_members(self):
-        try:
-            with open("members.json", "r") as f:
-                members_data = json.load(f)
-                for member_id, member_info in members_data.items():
-                    member = Member(member_info["member_id"], member_info["name"], member_info["email"])
-
-                    member.borrowed_books = member_info.get("borrowed_books", [])
-                    member.history = member_info.get("history", [])
-                    self.members[member_id] = member
-
-        except FileNotFoundError:
-            print("No saved members found.")
-
     def load_members(self):
         try:
             with open("members.json", "r") as f:

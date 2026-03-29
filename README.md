@@ -1,4 +1,4 @@
-# Library Management System
+# Library Management System // Final Version
 ## Description
 
 A Python-based library management system built using object-oriented programming (OOP).
@@ -18,7 +18,8 @@ Python 3
 Object-Oriented Programming (OOP)
 JSON (for data storage)
 unittest (for testing)
-How to Run
+
+# How to Run
 
 ## Run the program:
 
@@ -27,8 +28,10 @@ python3 main.py
 ## Run tests:
 
 python3 -m unittest tests/test_library.py
-Project Structure
-library-management-system/
+
+# Project Structure
+
+## library-management-system/
 │
 ├── src/
 │   ├── book.py

@@ -1,4 +1,5 @@
 # member class // self = itself, a reference to current instance of class // self.borrowed_books = [] = creates an empty list for borrowed_books attribute when a member is created
+# // Final Version
 class Member:
     def __init__(self, member_id, name, email):
         self.member_id = member_id
