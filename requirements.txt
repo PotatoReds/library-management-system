@@ -1,0 +1,2 @@
+# No external dependencies required
+# Python 3.8 or higher is recommended for better performance and features.
