@@ -56,43 +56,40 @@ class Library:
 #  if they do, checks if the book has available copies, if it does, decreases the number of copies by 1 and adds the book_id to the member's borrowed_books list
     def issue_book(self, book_id, member_id):
         if book_id not in self.books:
-            print("Book not found in library.")
-            return
+            return ("Book not found in library.")
         
         if member_id not in self.members:
-            print ("Member not found in library.")
-            return
+            return ("Member not found in library.")
 
         book = self.books[book_id]
         member = self.members[member_id]
 
         if book.copies <= 0:
-            print("No copies available for this book.")
-            return
+            return ("No copies available for this book.")
         
         book.copies -= 1
         member.borrow_book(book_id)
+        return ("Book issued successfully.")
 
 # method for returning a book, takes book_id and member_id as parameters, checks if both book_id and member_id exist in their respective dictionaries,
 # if they do, increases the number of copies of the book by 1 and removes the book_id from the member's borrowed_books list
     def return_book(self, book_id, member_id):
         if book_id not in self.books:
-            print("Book not found in library.")
-            return
+            return ("Book not found in library.")
         
         if member_id not in self.members:
-            print ("Member not found in library.")
-            return
+            return ("Member not found in library.")
         
         book = self.books[book_id]
         member = self.members[member_id]
 
         if book_id not in member.borrowed_books:
-            print("This member did not borrow this book.")
-            return
+            return ("This member did not borrow this book.")
                 
         book.copies += 1
         member.return_book(book_id)
+
+        return "Book returned successfully."
 
 
 # method to display all books in the library, returns a list of book information by calling the display_info method of each book object in the books dictionary
@@ -111,6 +108,17 @@ class Library:
         for book in self.books.values():
             if keyword.lower() in book.title.lower() or keyword.lower() in book.author.lower():
                 results.append(book.display_info())
+        return results
+    
+# method to search for members by name or email, takes a keyword as parameter, checks if the keyword is present in the name or email of each member in the members dictionary,
+# if a match is found, adds the member information to the results list and returns it    
+    def search_members(self, keyword):
+        results = []
+
+        for member in self.members.values():
+            if keyword.lower() in member.name.lower() or keyword.lower() in member.email.lower():
+                results.append(member.display_info())
+
         return results
 
 # method to save books to a json file, creates a dictionary of book_id and book attributes using __dict__ and saves it to "books.json"
@@ -147,14 +155,17 @@ class Library:
 
         except FileNotFoundError:
             print("No saved members found.")
-            pass
-                        
+
     def load_members(self):
         try:
             with open("members.json", "r") as f:
                 members_data = json.load(f)
                 for member_id, member_info in members_data.items():
-                    self.members[member_id] = Member(**member_info)
+                    member = Member(member_info["member_id"], member_info["name"], member_info["email"])
+
+                    member.borrowed_books = member_info.get("borrowed_books", [])
+                    member.history = member_info.get("history", [])
+                    self.members[member_id] = member
+
         except FileNotFoundError:
             print("No saved members found.")
-            pass
