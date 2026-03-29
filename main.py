@@ -1,7 +1,9 @@
+# This is the main entry point for the library management system. It provides a command-line interface (CLI) for users to interact with the library.
 from src.library import Library
 from src.book import Book
 from src.member import Member
 
+# create library instance and load books and members from files
 library = Library()
 library.load_books()
 library.load_members()
@@ -27,18 +29,21 @@ while True:
     choice = input("Enter your choice (1-14): ")
 
 # choice 1, display books
+# displays the list of books in the library by calling the display_books method of the library object and printing each book's information to the console
     if choice == "1":
         print("\nBooks in Library:")
         for book in library.display_books():
             print(book)
 
 # choice 2, display members
+# displays the list of members in the library by calling the display_members method of the library object and printing each member's information to the console
     elif choice == "2":
         print("\nLibrary Members:")
         for member in library.display_members():
             print(member)
 
 # choice 3, issue book to member
+# prompts user to enter book ID and member ID, processes the issuing of the book to the member, updates the library's records accordingly, saves the updated information to the files and informs the user of the result of the issuing operation
     elif choice == "3":
         book_id = input("Enter book ID to issue:")
         member_id = input("Enter member ID to issue to:")
@@ -50,6 +55,7 @@ while True:
         print(message)
 
 # choice 4, return book from member
+# prompts user to enter book ID and member ID, processes the return of the book from the member, updates the library's records accordingly, saves the updated information to the files and informs the user of the result of the return operation
     elif choice == "4":
         book_id = input("Enter book ID to return:")
         member_id = input("Enter member ID returning the book:")
@@ -61,6 +67,7 @@ while True:
         print(message)
 
 # choice 5, search for books by title, author or year
+# prompts user to enter a keyword, searches for books in the library whose title, author or publication year contains the keyword, and displays the search results. If no books are found matching the keyword, informs the user.
     elif choice == "5":
         keyword = input("Enter keyword to search for books (title, author, or year): ")
         results = library.search_books(keyword)
@@ -74,6 +81,7 @@ while True:
             print("No books found matching the keyword.")
 
 # choice 6, search for members by name or email
+# prompts user to enter a keyword, searches for members in the library whose name or email contains the keyword, and displays the search results. If no members are found matching the keyword, informs the user.
     elif choice == "6":
         keyword = input("Enter keyword to search for members (name or email):")
         results = library.search_members(keyword)
@@ -87,6 +95,7 @@ while True:
             print("No members found matching the keyword.")
 
 # choice 7, add books to library
+# prompts user to enter book ID, title, author, publication year and number of copies, creates a new book object with the provided information, adds the book to the library's books dictionary, saves the updated book information to the file and informs the user that the addition was successful
     elif choice == "7":
         book_id = input("Enter book ID:")
         title = input("Enter book title:")
@@ -111,6 +120,7 @@ while True:
         print("Book added successfully.")
 
 # choice 8, add member to library
+# prompts user to enter member ID, name and email, creates a new member object with the provided information, adds the member to the library's members dictionary, saves the updated member information to the file and informs the user that the addition was successful
     elif choice == "8":
         member_id = input("Enter member ID:")
         name = input("Enter member name:")
@@ -123,6 +133,7 @@ while True:
         print("Member added successfully.")
 
 # choice 9, remove book from library
+# prompts user to enter book ID, checks if book exists in library, if it does, removes the book from the library's books dictionary, saves the updated book information to the file and informs the user that the removal was successful
     elif choice == "9":
         book_id = input("Enter book ID to remove:")
         library.remove_book(book_id)
@@ -131,6 +142,7 @@ while True:
         print("Book removed successfully.")
 
 # choice 10, remove member from library
+# prompts user to enter member ID, checks if member exists in library, if it does, removes the member from the library's members dictionary, saves the updated member information to the file and informs the user that the removal was successful
     elif choice == "10":
         member_id = input("Enter member ID to remove:")
         library.remove_member(member_id)
@@ -139,6 +151,7 @@ while True:
         print("Member removed successfully.")
 
 # choice 11, update book information
+# prompts user to enter book ID, new title, new author, new publication year and new number of copies, checks if book exists in library, if it does, updates the book's information with the new values provided by the user (if they are not left blank), saves the updated book information to the file and informs the user that the update was successful
     elif choice == "11":
         book_id = input("Enter book ID to update:")
         title = input("Enter new title (leave blank to keep current):")
@@ -155,6 +168,7 @@ while True:
         print("Book information updated successfully.")
 
 # choice 12, update member information
+# prompts user to enter member ID, new name and new email, checks if member exists in library, if it does, updates the member's name and email with the new values provided by the user (if they are not left blank), saves the updated member information to the file and informs the user that the update was successful
     elif choice == "12":
         member_id = input("Enter member ID to update:")
         name = input("Enter new name (leave blank to keep current):")
@@ -166,6 +180,7 @@ while True:
         print("Member information updated successfully.")
 
 # choice 13, show member history
+# prompts user to enter member ID, checks if member exists in library, if it does, retrieves and displays the borrowing and returning history of the member, if no history is available, informs the user
     elif choice == "13":
         member_id = input("Enter member ID to view history:")
         
@@ -183,6 +198,7 @@ while True:
             print("Member not found in library.")
 
 # choice 14, exit the program
+# saves the current state of books and members to their respective files before exiting the program, ensuring that any changes made during the session are preserved for future use
     elif choice == "14":
         print("Exiting the library management system. Goodbye!")
         library.save_books()
